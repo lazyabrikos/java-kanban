@@ -1,27 +1,25 @@
+package ru.yandex.javacource.novikov.schedule.tasks;
+
 import java.util.ArrayList;
 
 public class Epic extends Task {
 
-    private ArrayList<Subtask> subtasks;
+    private ArrayList<Integer> subtasks;
 
-    Epic(String taskName, String description) {
+    public Epic(String taskName, String description) {
         super(taskName, description);
         subtasks = new ArrayList<>();
     }
 
-    public void addSubtask(Subtask subtask) {
-        if (!subtasks.contains(subtask)) {
-            subtasks.add(subtask);
-        }
+    public void addSubtask(Integer subtaskId) {
+        subtasks.add(subtaskId);
     }
 
-    public void removeSubtaskFromEpic(Subtask subtask) {
-        if (subtasks.contains(subtask)) {
-            subtasks.remove(subtask);
-        }
+    public void removeSubtaskFromEpic(Integer subtaskId) {
+        subtasks.remove(subtaskId);
     }
 
-    public ArrayList<Subtask> getSubtasks() {
+    public ArrayList<Integer> getSubtasks() {
         return subtasks;
     }
 

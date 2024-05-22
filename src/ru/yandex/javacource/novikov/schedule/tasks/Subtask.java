@@ -1,13 +1,14 @@
-import java.util.ArrayList;
+package ru.yandex.javacource.novikov.schedule.tasks;
 
-public class Subtask extends  Task {
+public class Subtask extends Task {
 
     protected int epicId;
 
-    Subtask(String taskName, String description) {
+    public Subtask(String taskName, String description) {
         super(taskName, description);
     }
-    Subtask(String taskName, String description, int epicId) {
+
+    public Subtask(String taskName, String description, int epicId) {
         super(taskName, description);
         this.epicId = epicId;
     }
@@ -19,11 +20,12 @@ public class Subtask extends  Task {
     public int getEpicId() {
         return this.epicId;
     }
+
     @Override
     public String toString() {
         return "Subtask{" +
                 "epicId=" + epicId +
-                ", taskName='" + this.getTaskId() + '\'' +
+                ", taskName='" + this.getTaskName() + '\'' +
                 ", description='" + this.getDescription() + '\'' +
                 ", taskId=" + this.getTaskId() +
                 ", status=" + this.getStatus() +

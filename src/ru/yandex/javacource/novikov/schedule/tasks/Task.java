@@ -1,16 +1,17 @@
+package ru.yandex.javacource.novikov.schedule.tasks;
+
 import java.util.Objects;
 
 public class Task {
-    private final String taskName;
-    private final String description;
-    private final int taskId;
+    private String taskName;
+    private String description;
+    private int taskId;
     private Status status;
 
-    Task(String taskName, String description) {
+    public Task(String taskName, String description) {
         this.taskName = taskName;
         this.description = description;
         this.status = Status.NEW;
-        this.taskId = hashCode();
     }
 
     public String getTaskName() {
@@ -31,6 +32,18 @@ public class Task {
 
     public void setStatus(Status status) {
         this.status = status;
+    }
+
+    public void setTaskName(String taskName) {
+        this.taskName = taskName;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public void setTaskId(int taskId) {
+        this.taskId = taskId;
     }
 
     @Override
