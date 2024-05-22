@@ -12,7 +12,6 @@ public class TaskManager {
     private final HashMap<Integer, Subtask> subtasks;
     private int generatorId = 0;
 
-
     public TaskManager() {
         tasks = new HashMap<>();
         epics = new HashMap<>();
@@ -29,9 +28,6 @@ public class TaskManager {
 
     //Добавляем новый эпик в Менеджер
     public int addEpic(Epic epic) {
-        if (epics.containsKey(epic.getId())) {
-            return epic.getId();
-        }
         int id = ++generatorId;
         epic.setTaskId(id);
         epics.put(id, epic);
