@@ -3,27 +3,27 @@ package ru.yandex.javacource.novikov.schedule.tasks;
 import java.util.Objects;
 
 public class Task {
-    private String taskName;
+    private String name;
     private String description;
-    private int taskId;
+    private int id;
     private Status status;
 
-    public Task(String taskName, String description) {
-        this.taskName = taskName;
+    public Task(String name, String description) {
+        this.name = name;
         this.description = description;
         this.status = Status.NEW;
     }
 
-    public String getTaskName() {
-        return taskName;
+    public String getName() {
+        return name;
     }
 
     public String getDescription() {
         return description;
     }
 
-    public int getTaskId() {
-        return taskId;
+    public int getId() {
+        return id;
     }
 
     public Status getStatus() {
@@ -34,16 +34,16 @@ public class Task {
         this.status = status;
     }
 
-    public void setTaskName(String taskName) {
-        this.taskName = taskName;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public void setDescription(String description) {
         this.description = description;
     }
 
-    public void setTaskId(int taskId) {
-        this.taskId = taskId;
+    public void setTaskId(int id) {
+        this.id = id;
     }
 
     @Override
@@ -51,30 +51,32 @@ public class Task {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Task task = (Task) o;
-        return taskId == task.taskId && Objects.equals(taskName, task.taskName) &&
+        return id == task.id && Objects.equals(name, task.name) &&
                 Objects.equals(description, task.description);
     }
 
     @Override
     public int hashCode() {
         int hash = 17;
-        if (taskName != null) {
-            hash = hash + Objects.hash(taskName);
+        if (name != null) {
+            hash = hash + Objects.hash(name);
         }
         hash = hash * 31;
 
         if (description != null) {
             hash = hash + Objects.hash(description);
         }
+
+        hash += id;
         return hash;
     }
 
     @Override
     public String toString() {
         return "Task{" +
-                "taskName='" + taskName + '\'' +
+                "name='" + name + '\'' +
                 ", description='" + description + '\'' +
-                ", taskId=" + taskId +
+                ", taskId=" + id +
                 ", status=" + status +
                 '}';
     }

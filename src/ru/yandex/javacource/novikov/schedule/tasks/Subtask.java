@@ -25,9 +25,9 @@ public class Subtask extends Task {
     public String toString() {
         return "Subtask{" +
                 "epicId=" + epicId +
-                ", taskName='" + this.getTaskName() + '\'' +
+                ", taskName='" + this.getName() + '\'' +
                 ", description='" + this.getDescription() + '\'' +
-                ", taskId=" + this.getTaskId() +
+                ", taskId=" + this.getId() +
                 ", status=" + this.getStatus() +
                 '}';
     }

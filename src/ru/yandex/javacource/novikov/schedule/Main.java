@@ -10,32 +10,37 @@ public class Main {
     public static void main(String[] args) {
         Epic epic = new Epic("Купить подарки", "подарки для нового года");
         TaskManager taskManager = new TaskManager();
-        taskManager.addEpic(epic);
+        int epicId = taskManager.addEpic(epic);
         System.out.println(epic.toString());
         Subtask subtask = new Subtask("Купить коробку",
                 "купить коробку для подарков",
-                epic.getTaskId()
+                epic.getId()
         );
 
         Subtask subtask2 = new Subtask("Купить ленточку",
                 "купить ленту для подарков",
-                epic.getTaskId()
+                epic.getId()
         );
 
         System.out.println(subtask);
         System.out.println(subtask2);
-        taskManager.addSubtask(subtask);
-        taskManager.addSubtask(subtask2);
+        System.out.println("Add subtasks");
+        int subtaskId = taskManager.addSubtask(subtask);
+        int subtask2Id = taskManager.addSubtask(subtask2);
         System.out.println(subtask);
         System.out.println(subtask2);
         System.out.println();
-        taskManager.removeSubtask(2);
+        System.out.println();
+        System.out.println("Remove first subtask");
+        taskManager.removeSubtask(subtaskId);
         System.out.println(epic);
         subtask2.setStatus(Status.DONE);
-        taskManager.addSubtask(subtask2);
+        System.out.println("Update status second subtask");
+        taskManager.updateSubtask(subtask2);
         System.out.println(taskManager.getAllEpics());
         System.out.println(taskManager.getAllSubtasks());
-        taskManager.removeSubtask(3);
+        System.out.println("Remove second subtask");
+        taskManager.removeSubtask(subtask2Id);
         System.out.println(taskManager.getAllEpics());
     }
 }
