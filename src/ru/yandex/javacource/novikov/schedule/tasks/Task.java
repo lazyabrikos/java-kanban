@@ -42,7 +42,7 @@ public class Task {
         this.description = description;
     }
 
-    public void setTaskId(int id) {
+    public void setId(int id) {
         this.id = id;
     }
 

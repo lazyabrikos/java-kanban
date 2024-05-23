@@ -21,7 +21,7 @@ public class TaskManager {
     //Добавляем новую задачу в Менеджер
     public int addTask(Task task) {
         int id = ++generatorId;
-        task.setTaskId(id);
+        task.setId(id);
         tasks.put(task.getId(), task);
         return id;
     }
@@ -29,7 +29,7 @@ public class TaskManager {
     //Добавляем новый эпик в Менеджер
     public int addEpic(Epic epic) {
         int id = ++generatorId;
-        epic.setTaskId(id);
+        epic.setId(id);
         epics.put(id, epic);
         return id;
     }
@@ -42,7 +42,7 @@ public class TaskManager {
             return null;
         }
         int id = ++generatorId;
-        subtask.setTaskId(id);
+        subtask.setId(id);
         subtasks.put(id, subtask);
         epic.addSubtask(id);
         updateEpicStatus(epic);
@@ -76,7 +76,8 @@ public class TaskManager {
         if (savedEpic == null) {
             return;
         }
-        epics.put(id, epic);
+        savedEpic.setName(epic.getName());
+        savedEpic.setDescription(epic.getDescription());
     }
     //Удаляем все задачи
     public void removeAllTasks() {
