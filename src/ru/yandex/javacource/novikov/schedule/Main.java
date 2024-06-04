@@ -1,7 +1,7 @@
 package ru.yandex.javacource.novikov.schedule;
 
 import ru.yandex.javacource.novikov.schedule.tasks.*;
-import ru.yandex.javacource.novikov.schedule.manager.TaskManager;
+import ru.yandex.javacource.novikov.schedule.manager.*;
 
 import java.util.Objects;
 
@@ -9,7 +9,8 @@ public class Main {
 
     public static void main(String[] args) {
         Epic epic = new Epic("Купить подарки", "подарки для нового года");
-        TaskManager taskManager = new TaskManager();
+        TaskManager taskManager = Manager.getDefault();
+        System.out.println(taskManager);
         int epicId = taskManager.addEpic(epic);
         System.out.println(epic.toString());
         Subtask subtask = new Subtask("Купить коробку",
@@ -42,5 +43,6 @@ public class Main {
         System.out.println("Remove second subtask");
         taskManager.removeSubtask(subtask2Id);
         System.out.println(taskManager.getAllEpics());
+
     }
 }
