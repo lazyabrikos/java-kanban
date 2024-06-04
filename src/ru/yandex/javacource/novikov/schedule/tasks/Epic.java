@@ -1,10 +1,11 @@
 package ru.yandex.javacource.novikov.schedule.tasks;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class Epic extends Task {
 
-    private ArrayList<Integer> subtasks;
+    private List<Integer> subtasks;
 
     public Epic(String taskName, String description) {
         super(taskName, description);
@@ -19,10 +20,13 @@ public class Epic extends Task {
         subtasks.remove(subtaskId);
     }
 
-    public ArrayList<Integer> getSubtasks() {
+    public List<Integer> getSubtasks() {
         return subtasks;
     }
 
+    public void setSubtasksIds(List<Integer> subtasksIds) {
+        subtasks = subtasksIds;
+    }
 
     @Override
     public String toString() {

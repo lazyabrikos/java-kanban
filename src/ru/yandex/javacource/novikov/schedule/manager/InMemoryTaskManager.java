@@ -8,13 +8,11 @@ import ru.yandex.javacource.novikov.schedule.manager.history.HistoryManager;
 import ru.yandex.javacource.novikov.schedule.tasks.*;
 
 public class InMemoryTaskManager implements TaskManager {
-
-    protected static int MAX_HISTORY_SIZE = 10;
     private final HashMap<Integer, Task> tasks;
     private final HashMap<Integer, Epic> epics;
     private final HashMap<Integer, Subtask> subtasks;
 
-    private HistoryManager inMemoryHistoryManager;
+    private final HistoryManager inMemoryHistoryManager;
     private int generatorId = 0;
 
     public InMemoryTaskManager() {
@@ -83,13 +81,16 @@ public class InMemoryTaskManager implements TaskManager {
 
     @Override
     public void updateEpic(Epic epic) {
+        //Странно, все тесты проходили, но ошибку я понял свою, что история тоже обновится
         int id = epic.getId();
         Epic savedEpic = epics.get(id);
         if (savedEpic == null) {
             return;
         }
-        savedEpic.setName(epic.getName());
-        savedEpic.setDescription(epic.getDescription());
+        epic.setSubtasksIds(savedEpic.getSubtasks());
+        epic.setStatus(savedEpic.getStatus());
+        epics.put(epic.getId(), epic);
+
     }
 
     //Удаляем все задачи
@@ -150,31 +151,23 @@ public class InMemoryTaskManager implements TaskManager {
 
     //Получение списка всех подзадач эпика
     @Override
-    public ArrayList<Subtask> getAllEpicSubtasks(int epicId) {
-        ArrayList<Subtask> returnSubtasks = new ArrayList<>();
+    public List<Subtask> getAllEpicSubtasks(int epicId) {
+        List<Subtask> returnSubtasks = new ArrayList<>();
         Epic epic = epics.get(epicId);
         if (epic == null) {
             return null;
-        }
-
-        for (int id : epic.getSubtasks()) {
-            returnSubtasks.add(subtasks.get(id));
-            inMemoryHistoryManager.addTask(subtasks.get(id));
         }
 
         return returnSubtasks;
     }
 
     @Override
-    public ArrayList<Task> getAllTasks() {
-        for (Task task : tasks.values()) {
-            inMemoryHistoryManager.addTask(task);
-        }
+    public List<Task> getAllTasks() {
         return new ArrayList<>(tasks.values());
     }
 
     @Override
-    public ArrayList<Epic> getAllEpics() {
+    public List<Epic> getAllEpics() {
 
         for (Task epic : epics.values()) {
             inMemoryHistoryManager.addTask(epic);
@@ -184,26 +177,25 @@ public class InMemoryTaskManager implements TaskManager {
     }
 
     @Override
-    public ArrayList<Subtask> getAllSubtasks() {
-        for (Task subTask : epics.values()) {
-            inMemoryHistoryManager.addTask(subTask);
-        }
-
+    public List<Subtask> getAllSubtasks() {
         return new ArrayList<>(subtasks.values());
     }
 
     @Override
     public Subtask getSubtask(int id) {
+        inMemoryHistoryManager.addTask(subtasks.get(id));
         return subtasks.get(id);
     }
 
     @Override
     public Epic getEpic(int id) {
+        inMemoryHistoryManager.addTask(epics.get(id));
         return epics.get(id);
     }
 
     @Override
     public Task getTask(int id) {
+        inMemoryHistoryManager.addTask(tasks.get(id));
         return tasks.get(id);
     }
 
@@ -214,7 +206,7 @@ public class InMemoryTaskManager implements TaskManager {
 
     //Обновление статуса епика
     private void updateEpicStatus(Epic epic) {
-        ArrayList<Integer> epicSubtasks = epic.getSubtasks();
+        List<Integer> epicSubtasks = epic.getSubtasks();
         int countEpicSubtasks = epicSubtasks.size();
         int countNewStatus = 0;
         int countDoneStatus = 0;

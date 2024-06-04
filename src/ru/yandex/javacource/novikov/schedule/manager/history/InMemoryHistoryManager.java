@@ -3,7 +3,9 @@ import ru.yandex.javacource.novikov.schedule.tasks.*;
 
 import java.util.List;
 import java.util.ArrayList;
-public class InMemoryHistoryManager implements HistoryManager{
+//Иногда не видно перенос строки из за Idea, которая пишет кто последний менял код и это выглядит как пропуск стрко:)
+
+public class InMemoryHistoryManager implements HistoryManager {
 
     protected static int MAX_HISTORY_SIZE = 10;
     private final List<Task> history;
@@ -14,11 +16,13 @@ public class InMemoryHistoryManager implements HistoryManager{
 
     @Override
     public void addTask(Task task) {
-        if (history.size() < MAX_HISTORY_SIZE) {
-            history.add(task);
-        } else {
+        if (task == null) {
+            return;
+        }
+
+        history.add(task);
+        if (history.size() > MAX_HISTORY_SIZE) {
             history.removeFirst();
-            history.add(task);
         }
     }
 
