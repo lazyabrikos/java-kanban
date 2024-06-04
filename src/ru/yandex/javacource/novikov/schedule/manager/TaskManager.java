@@ -51,5 +51,9 @@ public interface TaskManager {
 
     ArrayList<Subtask> getAllSubtasks();
 
+    Task getTask(int id);
+
+    Epic getEpic(int id);
+    Subtask getSubtask(int id);
     List<Task> getHistory();
 }
