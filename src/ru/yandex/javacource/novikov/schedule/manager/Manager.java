@@ -3,6 +3,7 @@ package ru.yandex.javacource.novikov.schedule.manager;
 import ru.yandex.javacource.novikov.schedule.manager.history.HistoryManager;
 import ru.yandex.javacource.novikov.schedule.manager.history.InMemoryHistoryManager;
 import ru.yandex.javacource.novikov.schedule.tasks.Task;
+
 public final class Manager {
 
     private Manager() {};

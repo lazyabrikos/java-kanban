@@ -185,16 +185,20 @@ public class InMemoryTaskManagerTest {
 
     @Test
     public void epicInHistoryShouldNotBeUpdated() {
+        Epic firstEpic = inMemoryTaskManager.getEpic(epicId);
         Epic epic1 = new Epic("NewTest", "Description");
         epic1.setId(epicId);
         inMemoryTaskManager.updateEpic(epic1);
         Epic savedEpic = inMemoryTaskManager.getEpic(epicId);
+        System.out.println(savedEpic);
         List<Task> history = inMemoryTaskManager.getHistory();
+        System.out.println(history.get(0));
         Assertions.assertNotEquals(savedEpic, history.get(0), "Epic should not be updated");
     }
 
     @Test
     public void taskInHistoryShouldNotBeUpdated() {
+        Task firstTask = inMemoryTaskManager.getTask(taskId);
         Task task1 = new Task("NewTask", "Description");
         task1.setId(taskId);
         inMemoryTaskManager.updateTask(task1);
@@ -205,6 +209,7 @@ public class InMemoryTaskManagerTest {
 
     @Test
     public void subtaskShouldNotBeUpdated() {
+        Subtask firstSubtask = inMemoryTaskManager.getSubtask(subtaskId);
         Subtask subtask1 = new Subtask("NewSubtask", "Description", epicId);
         subtask1.setId(subtaskId);
         inMemoryTaskManager.updateSubtask(subtask1);

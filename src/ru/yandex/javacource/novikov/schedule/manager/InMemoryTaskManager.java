@@ -157,7 +157,6 @@ public class InMemoryTaskManager implements TaskManager {
         if (epic == null) {
             return null;
         }
-
         return returnSubtasks;
     }
 
@@ -168,11 +167,6 @@ public class InMemoryTaskManager implements TaskManager {
 
     @Override
     public List<Epic> getAllEpics() {
-
-        for (Task epic : epics.values()) {
-            inMemoryHistoryManager.addTask(epic);
-        }
-
         return new ArrayList<>(epics.values());
     }
 
@@ -183,20 +177,23 @@ public class InMemoryTaskManager implements TaskManager {
 
     @Override
     public Subtask getSubtask(int id) {
-        inMemoryHistoryManager.addTask(subtasks.get(id));
-        return subtasks.get(id);
+        Subtask subtask = subtasks.get(id);
+        inMemoryHistoryManager.addTask(subtask);
+        return subtask;
     }
 
     @Override
     public Epic getEpic(int id) {
-        inMemoryHistoryManager.addTask(epics.get(id));
-        return epics.get(id);
+        Epic epic = epics.get(id);
+        inMemoryHistoryManager.addTask(epic);
+        return epic;
     }
 
     @Override
     public Task getTask(int id) {
-        inMemoryHistoryManager.addTask(tasks.get(id));
-        return tasks.get(id);
+        Task task = tasks.get(id);
+        inMemoryHistoryManager.addTask(task);
+        return task;
     }
 
     @Override
