@@ -11,7 +11,6 @@ public class InMemoryTaskManager implements TaskManager {
     private final HashMap<Integer, Task> tasks;
     private final HashMap<Integer, Epic> epics;
     private final HashMap<Integer, Subtask> subtasks;
-
     private final HistoryManager inMemoryHistoryManager;
     private int generatorId = 0;
 
@@ -147,7 +146,6 @@ public class InMemoryTaskManager implements TaskManager {
         epic.removeSubtaskFromEpic((Integer) id);
         updateEpicStatus(epic);
     }
-
 
     //Получение списка всех подзадач эпика
     @Override

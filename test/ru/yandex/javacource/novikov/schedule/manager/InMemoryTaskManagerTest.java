@@ -190,9 +190,7 @@ public class InMemoryTaskManagerTest {
         epic1.setId(epicId);
         inMemoryTaskManager.updateEpic(epic1);
         Epic savedEpic = inMemoryTaskManager.getEpic(epicId);
-        System.out.println(savedEpic);
         List<Task> history = inMemoryTaskManager.getHistory();
-        System.out.println(history.get(0));
         Assertions.assertNotEquals(savedEpic, history.get(0), "Epic should not be updated");
     }
 
@@ -208,7 +206,7 @@ public class InMemoryTaskManagerTest {
     }
 
     @Test
-    public void subtaskShouldNotBeUpdated() {
+    public void subtaskInHistoryShouldNotBeUpdated() {
         Subtask firstSubtask = inMemoryTaskManager.getSubtask(subtaskId);
         Subtask subtask1 = new Subtask("NewSubtask", "Description", epicId);
         subtask1.setId(subtaskId);
