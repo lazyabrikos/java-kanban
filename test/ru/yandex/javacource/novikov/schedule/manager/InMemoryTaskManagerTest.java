@@ -197,11 +197,15 @@ public class InMemoryTaskManagerTest {
     @Test
     public void taskInHistoryShouldNotBeUpdated() {
         Task firstTask = inMemoryTaskManager.getTask(taskId);
+        System.out.println(inMemoryTaskManager.getHistory());
         Task task1 = new Task("NewTask", "Description");
         task1.setId(taskId);
         inMemoryTaskManager.updateTask(task1);
+        System.out.println(inMemoryTaskManager.getAllTasks());
         Task savedTask = inMemoryTaskManager.getTask(taskId);
         List<Task> history = inMemoryTaskManager.getHistory();
+        System.out.println(savedTask);
+        System.out.println(history.get(0));
         Assertions.assertNotEquals(savedTask, history.get(0), "Task should not be updated");
     }
 

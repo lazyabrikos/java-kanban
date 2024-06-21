@@ -1,17 +1,22 @@
 package ru.yandex.javacource.novikov.schedule.manager.history;
-import ru.yandex.javacource.novikov.schedule.tasks.*;
 
+import ru.yandex.javacource.novikov.schedule.tasks.*;
+import ru.yandex.javacource.novikov.schedule.utils.Node;
+import java.util.HashMap;
 import java.util.List;
 import java.util.ArrayList;
+import java.util.Map;
+
 //Иногда не видно перенос строки из за Idea, которая пишет кто последний менял код и это выглядит как пропуск стрко:)
 
 public class InMemoryHistoryManager implements HistoryManager {
 
-    protected static int MAX_HISTORY_SIZE = 10;
-    private final List<Task> history;
+    private final Map<Integer, Node> nodesByIds;
+    private Node tail;
+    private Node head;
 
     public InMemoryHistoryManager() {
-        history = new ArrayList<>();
+        nodesByIds = new HashMap<>();
     }
 
     @Override
@@ -19,16 +24,66 @@ public class InMemoryHistoryManager implements HistoryManager {
         if (task == null) {
             return;
         }
-
-
-        if (history.size() >= MAX_HISTORY_SIZE) {
-            history.removeFirst();
+        if (nodesByIds.containsKey(task.getId())) {
+            removeNode(nodesByIds.get(task.getId()));
         }
-        history.add(task);
+
+        Node oldTail = tail;
+        Node node = new Node(task, tail, null);
+        tail = node;
+        if (oldTail == null) {
+            head = node;
+        } else {
+            oldTail.setNext(node);
+        }
+
+        nodesByIds.put(task.getId(), node);
+
     }
 
+
+    @Override
+    public void remove(int id) {
+        if (nodesByIds.containsKey(id)) {
+            removeNode(nodesByIds.get(id));
+        }
+    }
     @Override
     public List<Task> getHistory() {
-        return history;
+        return getTasks();
+    }
+
+    private void removeNode(Node node) {
+        if (node != null) {
+            nodesByIds.remove(node.getTask().getId());
+            Node prev = node.getPrev();
+            Node next = node.getNext();
+
+            if (prev == null) {
+                head = next;
+            } else {
+                prev.setNext(next);
+                node.setPrev(null);
+            }
+
+            if (next == null){
+                tail = prev;
+            } else {
+                next.setPrev(prev);
+                node.setNext(null);
+            }
+            node.setTask(null);
+        }
+    }
+
+    private List<Task> getTasks() {
+        List<Task> tasks = new ArrayList<>();
+        Node node = head;
+        while (node != null) {
+            tasks.add(node.getTask());
+            node = node.getNext();
+        }
+
+        return tasks;
     }
 }
