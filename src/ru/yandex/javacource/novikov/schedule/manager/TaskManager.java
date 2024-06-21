@@ -3,8 +3,6 @@ package ru.yandex.javacource.novikov.schedule.manager;
 import ru.yandex.javacource.novikov.schedule.tasks.Epic;
 import ru.yandex.javacource.novikov.schedule.tasks.Subtask;
 import ru.yandex.javacource.novikov.schedule.tasks.Task;
-
-import java.util.ArrayList;
 import java.util.List;
 
 public interface TaskManager {
@@ -54,6 +52,8 @@ public interface TaskManager {
     Task getTask(int id);
 
     Epic getEpic(int id);
+
     Subtask getSubtask(int id);
+
     List<Task> getHistory();
 }
