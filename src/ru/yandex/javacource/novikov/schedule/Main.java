@@ -8,37 +8,42 @@ public class Main {
 
     public static void main(String[] args) {
         Epic epic = new Epic("Купить подарки", "подарки для нового года");
+        Epic epic2 = new Epic("Приготовить новогодний стол", "Придумать разные блюда");
+        Task task1 = new Task("Сходить в магазин", "Купить продукты");
+        Task task2 = new Task("Позвонить родственникам", "Поздравить с Новым годом");
         TaskManager taskManager = Manager.getDefault();
         int epicId = taskManager.addEpic(epic);
+        int epic2Id = taskManager.addEpic(epic2);
+        int task1Id = taskManager.addTask(task1);
+        int task2Id = taskManager.addTask(task2);
         System.out.println(epic.toString());
         Subtask subtask = new Subtask("Купить коробку",
                 "купить коробку для подарков",
-                epic.getId()
+                epicId
         );
 
         Subtask subtask2 = new Subtask("Купить ленточку",
                 "купить ленту для подарков",
-                epic.getId()
+                epicId
         );
         Subtask subtask3 = new Subtask("Купить упаковку",
                 "купить упаковку для подарков",
-                epic.getId()
+                epicId
         );
-
         int subtaskId = taskManager.addSubtask(subtask);
         int subtask2Id = taskManager.addSubtask(subtask2);
         int subtask3Id = taskManager.addSubtask(subtask3);
-        System.out.println(subtaskId);
-        System.out.println(subtask2Id);
-        Task tmp = taskManager.getSubtask(subtaskId);
-        System.out.println(taskManager.getHistory());
-        tmp = taskManager.getSubtask(subtask2Id);
+
+        Task tmp = taskManager.getTask(task1Id);
+        tmp = taskManager.getTask(task2Id);
+        tmp = taskManager.getEpic(epicId);
+        tmp = taskManager.getEpic(epic2Id);
         System.out.println(taskManager.getHistory());
         tmp = taskManager.getSubtask(subtaskId);
         System.out.println(taskManager.getHistory());
-        tmp = taskManager.getSubtask(subtask3Id);
+        taskManager.removeTask(task1Id);
         System.out.println(taskManager.getHistory());
-        taskManager.removeSubtask(subtaskId);
+        taskManager.removeEpic(epicId);
         System.out.println(taskManager.getHistory());
     }
 }

@@ -7,7 +7,6 @@ public  class Node {
     private Node prev;
     private Node next;
 
-
     public Node(Task task, Node prev, Node next) {
         this.task = task;
         this.next = next;

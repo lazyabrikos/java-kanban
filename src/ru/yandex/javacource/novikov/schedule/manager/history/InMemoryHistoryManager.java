@@ -6,8 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Map;
-
-//Иногда не видно перенос строки из за Idea, которая пишет кто последний менял код и это выглядит как пропуск стрко:)
+//Делал по ТЗ, но не логичней будет вынести реализацию двусвязного списка в отдельный класс, как сделал для Node?
 
 public class InMemoryHistoryManager implements HistoryManager {
 
@@ -41,13 +40,13 @@ public class InMemoryHistoryManager implements HistoryManager {
 
     }
 
-
     @Override
     public void remove(int id) {
         if (nodesByIds.containsKey(id)) {
             removeNode(nodesByIds.get(id));
         }
     }
+
     @Override
     public List<Task> getHistory() {
         return getTasks();
