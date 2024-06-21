@@ -2,7 +2,6 @@ package ru.yandex.javacource.novikov.schedule;
 
 import ru.yandex.javacource.novikov.schedule.tasks.*;
 import ru.yandex.javacource.novikov.schedule.manager.*;
-import java.util.Objects;
 
 public class Main {
 
