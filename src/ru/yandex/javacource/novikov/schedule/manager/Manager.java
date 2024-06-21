@@ -5,7 +5,9 @@ import ru.yandex.javacource.novikov.schedule.manager.history.InMemoryHistoryMana
 
 public final class Manager {
 
-    private Manager() {}
+    private Manager() {
+
+    }
 
     public static TaskManager getDefault() {
         return new InMemoryTaskManager();
