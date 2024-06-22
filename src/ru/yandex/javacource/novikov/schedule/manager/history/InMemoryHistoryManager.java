@@ -1,7 +1,6 @@
 package ru.yandex.javacource.novikov.schedule.manager.history;
 
 import ru.yandex.javacource.novikov.schedule.tasks.*;
-import ru.yandex.javacource.novikov.schedule.utils.Node;
 import java.util.HashMap;
 import java.util.List;
 import java.util.ArrayList;
@@ -10,12 +9,12 @@ import java.util.Map;
 
 public class InMemoryHistoryManager implements HistoryManager {
 
-    private final Map<Integer, Node> nodesByIds;
+    private final Map<Integer, Node> history;
     private Node tail;
     private Node head;
 
     public InMemoryHistoryManager() {
-        nodesByIds = new HashMap<>();
+        history = new HashMap<>();
     }
 
     @Override
@@ -23,28 +22,20 @@ public class InMemoryHistoryManager implements HistoryManager {
         if (task == null) {
             return;
         }
-        if (nodesByIds.containsKey(task.getId())) {
-            removeNode(nodesByIds.get(task.getId()));
-        }
 
-        Node oldTail = tail;
-        Node node = new Node(task, tail, null);
-        tail = node;
-        if (oldTail == null) {
-            head = node;
-        } else {
-            oldTail.setNext(node);
-        }
-
-        nodesByIds.put(task.getId(), node);
-
+        final int id = task.getId();
+        remove(id);
+        linkLast(task);
+        history.put(id, tail);
     }
 
     @Override
     public void remove(int id) {
-        if (nodesByIds.containsKey(id)) {
-            removeNode(nodesByIds.get(id));
+        final Node node = history.get(id);
+        if (node == null) {
+            return;
         }
+        removeNode(node);
     }
 
     @Override
@@ -52,26 +43,35 @@ public class InMemoryHistoryManager implements HistoryManager {
         return getTasks();
     }
 
+    private void linkLast(Task task) {
+        Node node = new Node(task, tail, null);
+        if (head == null) {
+            head = node;
+        } else {
+            tail.next = node;
+        }
+        tail = node;
+    }
+
     private void removeNode(Node node) {
         if (node != null) {
-            nodesByIds.remove(node.getTask().getId());
-            Node prev = node.getPrev();
-            Node next = node.getNext();
+            Node prev = node.prev;
+            Node next = node.next;
 
             if (prev == null) {
                 head = next;
             } else {
-                prev.setNext(next);
-                node.setPrev(null);
+                prev.next = next;
+                node.prev = null;
             }
 
             if (next == null) {
                 tail = prev;
             } else {
-                next.setPrev(prev);
-                node.setNext(null);
+                next.prev = prev;
+                node.next = null;
             }
-            node.setTask(null);
+            node.task =null;
         }
     }
 
@@ -79,10 +79,23 @@ public class InMemoryHistoryManager implements HistoryManager {
         List<Task> tasks = new ArrayList<>();
         Node node = head;
         while (node != null) {
-            tasks.add(node.getTask());
-            node = node.getNext();
+            tasks.add(node.task);
+            node = node.next;
         }
 
         return tasks;
+    }
+
+    private static class Node {
+        private Task task;
+        private Node prev;
+        private Node next;
+
+        public Node(Task task, Node prev, Node next) {
+            this.task = task;
+            this.next = next;
+            this.prev = prev;
+        }
+
     }
 }
