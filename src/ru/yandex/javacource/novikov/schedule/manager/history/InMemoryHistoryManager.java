@@ -71,7 +71,7 @@ public class InMemoryHistoryManager implements HistoryManager {
                 next.prev = prev;
                 node.next = null;
             }
-            node.task =null;
+            node.task = null;
         }
     }
 
