@@ -1,17 +1,20 @@
 package ru.yandex.javacource.novikov.schedule.manager.history;
-import ru.yandex.javacource.novikov.schedule.tasks.*;
 
+import ru.yandex.javacource.novikov.schedule.tasks.*;
+import java.util.HashMap;
 import java.util.List;
 import java.util.ArrayList;
-//Иногда не видно перенос строки из за Idea, которая пишет кто последний менял код и это выглядит как пропуск стрко:)
+import java.util.Map;
+//Делал по ТЗ, но не логичней будет вынести реализацию двусвязного списка в отдельный класс, как сделал для Node?
 
 public class InMemoryHistoryManager implements HistoryManager {
 
-    protected static int MAX_HISTORY_SIZE = 10;
-    private final List<Task> history;
+    private final Map<Integer, Node> history;
+    private Node tail;
+    private Node head;
 
     public InMemoryHistoryManager() {
-        history = new ArrayList<>();
+        history = new HashMap<>();
     }
 
     @Override
@@ -20,15 +23,79 @@ public class InMemoryHistoryManager implements HistoryManager {
             return;
         }
 
+        final int id = task.getId();
+        remove(id);
+        linkLast(task);
+        history.put(id, tail);
+    }
 
-        if (history.size() >= MAX_HISTORY_SIZE) {
-            history.removeFirst();
+    @Override
+    public void remove(int id) {
+        final Node node = history.get(id);
+        if (node == null) {
+            return;
         }
-        history.add(task);
+        removeNode(node);
     }
 
     @Override
     public List<Task> getHistory() {
-        return history;
+        return getTasks();
+    }
+
+    private void linkLast(Task task) {
+        Node node = new Node(task, tail, null);
+        if (head == null) {
+            head = node;
+        } else {
+            tail.next = node;
+        }
+        tail = node;
+    }
+
+    private void removeNode(Node node) {
+        if (node != null) {
+            Node prev = node.prev;
+            Node next = node.next;
+
+            if (prev == null) {
+                head = next;
+            } else {
+                prev.next = next;
+                node.prev = null;
+            }
+
+            if (next == null) {
+                tail = prev;
+            } else {
+                next.prev = prev;
+                node.next = null;
+            }
+            node.task = null;
+        }
+    }
+
+    private List<Task> getTasks() {
+        List<Task> tasks = new ArrayList<>();
+        Node node = head;
+        while (node != null) {
+            tasks.add(node.task);
+            node = node.next;
+        }
+
+        return tasks;
+    }
+
+    private static class Node {
+        private Task task;
+        private Node prev;
+        private Node next;
+
+        public Node(Task task, Node prev, Node next) {
+            this.task = task;
+            this.next = next;
+            this.prev = prev;
+        }
+
     }
 }

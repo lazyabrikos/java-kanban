@@ -122,7 +122,9 @@ public class InMemoryTaskManagerTest {
 
     @Test
     public void removeEpicByIdTest() {
+        System.out.println(inMemoryTaskManager.getEpic(epicId));
         inMemoryTaskManager.removeEpic(epicId);
+        System.out.println(inMemoryTaskManager.getEpic(epicId));
         Assertions.assertNull(inMemoryTaskManager.getEpic(epicId), "Epic not removed");
     }
 
@@ -184,35 +186,43 @@ public class InMemoryTaskManagerTest {
     }
 
     @Test
-    public void epicInHistoryShouldNotBeUpdated() {
+    public void epicInHistoryShouldBeUpdated() {
         Epic firstEpic = inMemoryTaskManager.getEpic(epicId);
         Epic epic1 = new Epic("NewTest", "Description");
         epic1.setId(epicId);
         inMemoryTaskManager.updateEpic(epic1);
         Epic savedEpic = inMemoryTaskManager.getEpic(epicId);
         List<Task> history = inMemoryTaskManager.getHistory();
-        Assertions.assertNotEquals(savedEpic, history.get(0), "Epic should not be updated");
+        Assertions.assertEquals(savedEpic, history.get(0), "Epic should be updated");
     }
 
     @Test
-    public void taskInHistoryShouldNotBeUpdated() {
+    public void taskInHistoryShouldBeUpdated() {
         Task firstTask = inMemoryTaskManager.getTask(taskId);
         Task task1 = new Task("NewTask", "Description");
         task1.setId(taskId);
         inMemoryTaskManager.updateTask(task1);
         Task savedTask = inMemoryTaskManager.getTask(taskId);
         List<Task> history = inMemoryTaskManager.getHistory();
-        Assertions.assertNotEquals(savedTask, history.get(0), "Task should not be updated");
+        Assertions.assertEquals(savedTask, history.get(0), "Task should be updated");
     }
 
     @Test
-    public void subtaskInHistoryShouldNotBeUpdated() {
+    public void subtaskInHistoryShouldBeUpdated() {
         Subtask firstSubtask = inMemoryTaskManager.getSubtask(subtaskId);
         Subtask subtask1 = new Subtask("NewSubtask", "Description", epicId);
         subtask1.setId(subtaskId);
         inMemoryTaskManager.updateSubtask(subtask1);
         Subtask savedSubtask = inMemoryTaskManager.getSubtask(subtaskId);
         List<Task> history = inMemoryTaskManager.getHistory();
-        Assertions.assertNotEquals(savedSubtask, history.get(0), "Subtask should not be updated");
+        Assertions.assertEquals(savedSubtask, history.get(0), "Subtask should be updated");
+    }
+
+    @Test
+    public void removeSubtaskFromEpicIfSubtaskRemovedFromManager() {
+        inMemoryTaskManager.removeSubtask(subtaskId);
+        Assertions.assertEquals(0, epic.getSubtasks().size(),
+                "Subtask should be removed"
+        );
     }
 }
