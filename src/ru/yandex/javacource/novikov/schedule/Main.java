@@ -2,6 +2,7 @@ package ru.yandex.javacource.novikov.schedule;
 
 import ru.yandex.javacource.novikov.schedule.tasks.*;
 import ru.yandex.javacource.novikov.schedule.manager.*;
+import java.io.File;
 
 public class Main {
 
@@ -10,7 +11,8 @@ public class Main {
         Epic epic2 = new Epic("Приготовить новогодний стол", "Придумать разные блюда");
         Task task1 = new Task("Сходить в магазин", "Купить продукты");
         Task task2 = new Task("Позвонить родственникам", "Поздравить с Новым годом");
-        TaskManager taskManager = Manager.getDefault();
+        File file = new File("D:\\IdeaProjects\\java-kanban\\src\\ru\\yandex\\javacource\\novikov\\schedule\\resources\\data.csv");
+        FileBackedTaskManager taskManager = new FileBackedTaskManager(file);
         int epicId = taskManager.addEpic(epic);
         int epic2Id = taskManager.addEpic(epic2);
         int task1Id = taskManager.addTask(task1);
@@ -44,5 +46,11 @@ public class Main {
         System.out.println(taskManager.getHistory());
         taskManager.removeEpic(epicId);
         System.out.println(taskManager.getHistory());
+
+        FileBackedTaskManager taskManager1 = FileBackedTaskManager.loadFromFile(file);
+        System.out.println("History taskManager2");
+        System.out.println(taskManager1.getHistory());
+
+
     }
 }
