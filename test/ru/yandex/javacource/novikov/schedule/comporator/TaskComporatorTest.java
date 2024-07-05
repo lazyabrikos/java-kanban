@@ -1,5 +1,6 @@
 package ru.yandex.javacource.novikov.schedule.comporator;
 
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -33,7 +34,7 @@ public class TaskComporatorTest {
         task2 = new Task("Tmp2", "tmp2");
         task1.setId(6);
         task2.setId(6);
-        Assertions.assertTrue(taskComparator.compare(task1, task2) == 0,
+        Assertions.assertEquals(taskComparator.compare(task1, task2), 0,
                 "Task1 should be less then Task2"
         );
     }

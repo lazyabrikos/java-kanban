@@ -1,12 +1,7 @@
 package ru.yandex.javacource.novikov.schedule.manager;
 
-import org.junit.Assert;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import ru.yandex.javacource.novikov.schedule.tasks.Epic;
-import ru.yandex.javacource.novikov.schedule.tasks.Status;
 import ru.yandex.javacource.novikov.schedule.tasks.Subtask;
 import ru.yandex.javacource.novikov.schedule.tasks.Task;
 
@@ -148,5 +143,12 @@ public class FileBackedTaskManagerTest {
                 "Subtasks are not the same"
         );
 
+    }
+
+
+    @AfterEach
+    public void deleteTempFiles() {
+        file.deleteOnExit();
+        historyFile.deleteOnExit();
     }
 }
