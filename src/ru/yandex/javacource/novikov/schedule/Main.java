@@ -11,7 +11,8 @@ public class Main {
         Epic epic2 = new Epic("Приготовить новогодний стол", "Придумать разные блюда");
         Task task1 = new Task("Сходить в магазин", "Купить продукты");
         Task task2 = new Task("Позвонить родственникам", "Поздравить с Новым годом");
-        File file = new File("D:\\IdeaProjects\\java-kanban\\src\\ru\\yandex\\javacource\\novikov\\schedule\\resources\\data.csv");
+        Task task3 = new Task("Пить пиво", "Поздравить с Новым годом");
+        final File file = new File("D:\\IdeaProjects\\java-kanban\\src\\ru\\yandex\\javacource\\novikov\\schedule\\resources\\data.csv");
         FileBackedTaskManager taskManager = new FileBackedTaskManager(file);
         int epicId = taskManager.addEpic(epic);
         int epic2Id = taskManager.addEpic(epic2);
@@ -50,7 +51,10 @@ public class Main {
         FileBackedTaskManager taskManager1 = FileBackedTaskManager.loadFromFile(file);
         System.out.println("History taskManager2");
         System.out.println(taskManager1.getHistory());
-
+        taskManager1.addTask(task1);
+        taskManager1.addTask(task3);
+        System.out.println(taskManager1.getAllTasks());
+        System.out.println(taskManager1.getAllEpics());
 
     }
 }

@@ -7,8 +7,6 @@ import ru.yandex.javacource.novikov.schedule.tasks.Epic;
 import ru.yandex.javacource.novikov.schedule.tasks.Status;
 import ru.yandex.javacource.novikov.schedule.tasks.Subtask;
 import ru.yandex.javacource.novikov.schedule.tasks.Task;
-
-import java.util.ArrayList;
 import java.util.List;
 
 public class InMemoryTaskManagerTest {
@@ -122,9 +120,7 @@ public class InMemoryTaskManagerTest {
 
     @Test
     public void removeEpicByIdTest() {
-        System.out.println(inMemoryTaskManager.getEpic(epicId));
         inMemoryTaskManager.removeEpic(epicId);
-        System.out.println(inMemoryTaskManager.getEpic(epicId));
         Assertions.assertNull(inMemoryTaskManager.getEpic(epicId), "Epic not removed");
     }
 

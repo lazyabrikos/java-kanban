@@ -1,4 +1,4 @@
-package ru.yandex.javacource.novikov.schedule.utils;
+package ru.yandex.javacource.novikov.schedule.comporator;
 
 import ru.yandex.javacource.novikov.schedule.tasks.Task;
 import java.util.Comparator;

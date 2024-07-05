@@ -2,7 +2,7 @@ package ru.yandex.javacource.novikov.schedule.manager;
 
 import ru.yandex.javacource.novikov.schedule.exceptions.ManagerSaveException;
 import ru.yandex.javacource.novikov.schedule.tasks.*;
-import ru.yandex.javacource.novikov.schedule.utils.TaskComparator;
+import ru.yandex.javacource.novikov.schedule.comporator.TaskComparator;
 
 
 import java.io.*;
@@ -14,7 +14,7 @@ import java.io.FileReader;
 public class FileBackedTaskManager extends InMemoryTaskManager implements TaskManager  {
     private final File file;
     private final static String CSV_HEADER = "id,type,name,status,description,epic";
-    private final static File HISTORY_FILE = new File("D:\\IdeaProjects\\java-kanban\\src\\ru\\yandex\\javacource\\novikov\\schedule\\resources\\history.csv");
+    private static File HISTORY_FILE = new File("D:\\IdeaProjects\\java-kanban\\src\\ru\\yandex\\javacource\\novikov\\schedule\\resources\\history.csv");
     public FileBackedTaskManager(File file) {
         super();
         this.file = file;
@@ -39,6 +39,27 @@ public class FileBackedTaskManager extends InMemoryTaskManager implements TaskMa
         int epicId = super.addEpic(epic);
         save();
         return epicId;
+    }
+
+    @Override
+    public Task getTask(int id) {
+        Task task = super.getTask(id);
+        saveHistory();
+        return task;
+    }
+
+    @Override
+    public Epic getEpic(int id) {
+        Epic epic = super.getEpic(id);
+        saveHistory();
+        return epic;
+    }
+
+    @Override
+    public Subtask getSubtask(int id) {
+        Subtask subtask = super.getSubtask(id);
+        saveHistory();
+        return subtask;
     }
 
     @Override
@@ -118,7 +139,7 @@ public class FileBackedTaskManager extends InMemoryTaskManager implements TaskMa
 
     private void saveHistory() {
         try (FileWriter fileWriter = new FileWriter(HISTORY_FILE, StandardCharsets.UTF_8)) {
-            List<Task> history = super.getInMemoryHistoryManager().getHistory();
+            List<Task> history = super.getHistory();
 
             fileWriter.write(CSV_HEADER+"\n");
             for (Task task : history) {
@@ -149,16 +170,24 @@ public class FileBackedTaskManager extends InMemoryTaskManager implements TaskMa
             TaskComparator taskComparator = new TaskComparator();
 
            savedTasks.sort(taskComparator);
-
+           Task lastTask = savedTasks.getLast();
+           int maxId = lastTask.getId();
            for (Task task : savedTasks) {
                if (task instanceof Epic) {
+                   int epicId = task.getId();
                    taskManager.addEpic((Epic) task);
+                   task.setId(epicId);
                } else if (task instanceof Subtask) {
+                   int epicId = task.getId();
                    taskManager.addSubtask((Subtask) task);
+                   task.setId(epicId);
                } else {
+                   int epicId = task.getId();
                    taskManager.addTask(task);
+                   task.setId(epicId);
                }
            }
+            taskManager.setGeneratorId(maxId);
 
         } catch (IOException e) {
             throw new ManagerSaveException("Ошибка при чтении файла");
@@ -242,5 +271,13 @@ public class FileBackedTaskManager extends InMemoryTaskManager implements TaskMa
         }
 
         return TaskType.TASK;
+    }
+
+    protected void setHistoryFile(File historyFile) {
+        HISTORY_FILE = historyFile;
+    }
+
+    protected String getHistoryFile() {
+        return HISTORY_FILE.toString();
     }
 }

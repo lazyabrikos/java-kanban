@@ -230,8 +230,7 @@ public class InMemoryTaskManager implements TaskManager {
         }
     }
 
-    protected HistoryManager getInMemoryHistoryManager() {
-        return inMemoryHistoryManager;
+    protected void setGeneratorId(int maxGeneratorId) {
+        generatorId = maxGeneratorId;
     }
-
 }
