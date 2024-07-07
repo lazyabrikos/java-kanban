@@ -26,23 +26,30 @@ public class FileBackedTaskManagerTest {
 
     @BeforeEach
     public void createManager() {
-        try {
-            File path = new File(
-                    "." + File.separator +
-                            "test" + File.separator +
-                            "ru" + File.separator +
-                            "yandex" + File.separator +
-                            "javacource" + File.separator +
-                            "novikov" + File.separator +
-                            "schedule" + File.separator +
-                            "resources"
-            );
+        file = new File(
+                "." + File.separator +
+                        "test" + File.separator +
+                        "ru" + File.separator +
+                        "yandex" + File.separator +
+                        "javacource" + File.separator +
+                        "novikov" + File.separator +
+                        "schedule" + File.separator +
+                        "resources" + File.separator + "data.csv"
+        );
 
-            file = File.createTempFile("data", ".csv", path);
-            historyFile = File.createTempFile("history", ".csv", path);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        historyFile = new File(
+                "." + File.separator +
+                        "test" + File.separator +
+                        "ru" + File.separator +
+                        "yandex" + File.separator +
+                        "javacource" + File.separator +
+                        "novikov" + File.separator +
+                        "schedule" + File.separator +
+                        "resources" + File.separator + "history.csv"
+        );
+
+        //file = File.createTempFile("data", ".csv", path);
+        //historyFile = File.createTempFile("history", ".csv", path);
         fileBackedTaskManager = new FileBackedTaskManager(file);
         fileBackedTaskManager.setHistoryFile(historyFile);
         task = new Task("TestTask", "Description");
