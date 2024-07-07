@@ -27,16 +27,19 @@ public class FileBackedTaskManagerTest {
     @BeforeEach
     public void createManager() {
         try {
-            file = File.createTempFile("data", ".csv",
-                    new File(
-                            ".\\test\\ru\\yandex\\javacource\\novikov\\schedule\\resources\\"
-                    )
+            File path = new File(
+                    "." + File.separator +
+                            "test" + File.separator +
+                            "ru" + File.separator +
+                            "yandex" + File.separator +
+                            "javacource" + File.separator +
+                            "novikov" + File.separator +
+                            "schedule" + File.separator +
+                            "resources"
             );
-            historyFile = File.createTempFile("history", ".csv",
-                    new File(
-                            ".\\test\\ru\\yandex\\javacource\\novikov\\schedule\\resources\\"
-                    )
-            );
+
+            file = File.createTempFile("data", ".csv", path);
+            historyFile = File.createTempFile("history", ".csv", path);
         } catch (IOException e) {
             e.printStackTrace();
         }
