@@ -17,6 +17,20 @@
             </Attribute>
           </value>
         </entry>
+        <entry key="\test\ru\yandex\javacource\novikov\schedule\resources\data.csv">
+          <value>
+            <Attribute>
+              <option name="separator" value="," />
+            </Attribute>
+          </value>
+        </entry>
+        <entry key="\test\ru\yandex\javacource\novikov\schedule\resources\history.csv">
+          <value>
+            <Attribute>
+              <option name="separator" value="," />
+            </Attribute>
+          </value>
+        </entry>
       </map>
     </option>
   </component>

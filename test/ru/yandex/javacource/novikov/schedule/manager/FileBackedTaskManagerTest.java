@@ -50,6 +50,7 @@ public class FileBackedTaskManagerTest {
 
         //file = File.createTempFile("data", ".csv", path);
         //historyFile = File.createTempFile("history", ".csv", path);
+        System.out.println(file);
         fileBackedTaskManager = new FileBackedTaskManager(file);
         fileBackedTaskManager.setHistoryFile(historyFile);
         task = new Task("TestTask", "Description");
