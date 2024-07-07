@@ -21,8 +21,6 @@ public class FileBackedTaskManagerTest {
     protected List<Task> tasks;
     protected List<Epic> epics;
     protected List<Subtask> subtasks;
-    //final File file = new File("D:\\IdeaProjects\\java-kanban\\test\\ru\\yandex\\javacource\\novikov\\schedule\\resources\\data.csv");
-    //final File historyFile = new File("D:\\IdeaProjects\\java-kanban\\test\\ru\\yandex\\javacource\\novikov\\schedule\\resources\\history.csv");
     protected File file;
     protected File historyFile;
 
