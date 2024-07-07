@@ -15,7 +15,7 @@ public class FileBackedTaskManager extends InMemoryTaskManager implements TaskMa
     private final File file;
     private static final String CSV_HEADER = "id,type,name,status,description,epic";
     private static File HISTORY_FILE = new File(
-            "D:\\IdeaProjects\\java-kanban\\src\\ru\\yandex\\javacource\\" +
+            ".\\src\\ru\\yandex\\javacource\\" +
                     "novikov\\schedule\\resources\\history.csv"
     );
 

@@ -12,7 +12,7 @@ public class Main {
         Task task1 = new Task("Сходить в магазин", "Купить продукты");
         Task task2 = new Task("Позвонить родственникам", "Поздравить с Новым годом");
         Task task3 = new Task("Пить пиво", "Поздравить с Новым годом");
-        final File file = new File("D:\\IdeaProjects\\java-kanban\\src\\ru\\yandex\\javacource\\novikov\\schedule\\resources\\data.csv");
+        final File file = new File(".\\src\\ru\\yandex\\javacource\\novikov\\schedule\\resources\\data.csv");
         FileBackedTaskManager taskManager = new FileBackedTaskManager(file);
         int epicId = taskManager.addEpic(epic);
         int epic2Id = taskManager.addEpic(epic2);
