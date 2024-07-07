@@ -163,9 +163,9 @@ public class FileBackedTaskManagerTest {
     }
 
 
-    @AfterEach
-    public void deleteTempFiles() {
-        file.deleteOnExit();
-        historyFile.deleteOnExit();
-    }
+//    @AfterEach
+//    public void deleteTempFiles() {
+//        file.deleteOnExit();
+//        historyFile.deleteOnExit();
+//    }
 }
