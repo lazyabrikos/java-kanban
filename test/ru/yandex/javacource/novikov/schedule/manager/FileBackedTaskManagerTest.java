@@ -28,23 +28,11 @@ public class FileBackedTaskManagerTest {
     public void createManager() {
         file = new File(
                 "." + File.separator +
-                        "src" + File.separator +
-                        "ru" + File.separator +
-                        "yandex" + File.separator +
-                        "javacource" + File.separator +
-                        "novikov" + File.separator +
-                        "schedule" + File.separator +
                         "resources" + File.separator + "test.data.csv"
         );
 
         historyFile = new File(
                 "." + File.separator +
-                        "src" + File.separator +
-                        "ru" + File.separator +
-                        "yandex" + File.separator +
-                        "javacource" + File.separator +
-                        "novikov" + File.separator +
-                        "schedule" + File.separator +
                         "resources" + File.separator + "test.history.csv"
         );
 
@@ -160,7 +148,6 @@ public class FileBackedTaskManagerTest {
         );
 
     }
-
 
     @AfterEach
     public void deleteTempFiles() {

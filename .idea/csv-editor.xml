@@ -3,6 +3,13 @@
   <component name="CsvFileAttributes">
     <option name="attributeMap">
       <map>
+        <entry key="\resources\test.data.csv">
+          <value>
+            <Attribute>
+              <option name="separator" value="," />
+            </Attribute>
+          </value>
+        </entry>
         <entry key="\src\ru\yandex\javacource\novikov\schedule\resources\data.csv">
           <value>
             <Attribute>
@@ -11,20 +18,6 @@
           </value>
         </entry>
         <entry key="\src\ru\yandex\javacource\novikov\schedule\resources\history.csv">
-          <value>
-            <Attribute>
-              <option name="separator" value="," />
-            </Attribute>
-          </value>
-        </entry>
-        <entry key="\test\ru\yandex\javacource\novikov\schedule\resources\data.csv">
-          <value>
-            <Attribute>
-              <option name="separator" value="," />
-            </Attribute>
-          </value>
-        </entry>
-        <entry key="\test\ru\yandex\javacource\novikov\schedule\resources\history.csv">
           <value>
             <Attribute>
               <option name="separator" value="," />

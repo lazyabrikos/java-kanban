@@ -14,15 +14,10 @@ public class Main {
         Task task3 = new Task("Пить пиво", "Поздравить с Новым годом");
         final File file = new File(
                 "." + File.separator +
-                        "src" + File.separator +
-                        "ru" + File.separator +
-                        "yandex" + File.separator +
-                        "javacource" + File.separator +
-                        "novikov" + File.separator +
-                        "schedule" + File.separator +
                         "resources" + File.separator + "data.csv"
         );
-        FileBackedTaskManager taskManager = new FileBackedTaskManager(file);
+
+        TaskManager taskManager = Manager.getDefault();
         int epicId = taskManager.addEpic(epic);
         int epic2Id = taskManager.addEpic(epic2);
         int task1Id = taskManager.addTask(task1);
