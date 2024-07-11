@@ -2,9 +2,6 @@ package ru.yandex.javacource.novikov.schedule.manager;
 
 import ru.yandex.javacource.novikov.schedule.exceptions.ManagerSaveException;
 import ru.yandex.javacource.novikov.schedule.tasks.*;
-import ru.yandex.javacource.novikov.schedule.comporator.TaskComparator;
-
-
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
