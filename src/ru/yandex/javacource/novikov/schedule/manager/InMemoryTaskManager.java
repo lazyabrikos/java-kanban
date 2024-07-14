@@ -146,7 +146,7 @@ public class InMemoryTaskManager implements TaskManager {
         }
         inMemoryHistoryManager.remove(id);
         Epic epic = epics.get(subtask.getEpicId());
-        epic.removeSubtaskFromEpic((Integer) id);
+        epic.removeSubtaskFromEpic(id);
         updateEpicStatus(epic);
     }
 
@@ -202,6 +202,10 @@ public class InMemoryTaskManager implements TaskManager {
         return inMemoryHistoryManager.getHistory();
     }
 
+    protected void addToHistory(Task task) {
+        inMemoryHistoryManager.addTask(task);
+    }
+
     //Обновление статуса епика
     private void updateEpicStatus(Epic epic) {
         List<Integer> epicSubtasks = epic.getSubtasks();
@@ -226,4 +230,28 @@ public class InMemoryTaskManager implements TaskManager {
         }
     }
 
+    protected void setGeneratorId(int maxGeneratorId) {
+        generatorId = maxGeneratorId;
+    }
+
+    protected void addTaskWithoutGeneratorId(Task task) {
+        tasks.put(task.getId(), task);
+    }
+
+    protected void addEpicWithoutGeneratorId(Epic epic) {
+        epics.put(epic.getId(), epic);
+    }
+
+    protected void addSubtaskWithoutGeneratorId(Subtask subtask) {
+        int epicId = subtask.getEpicId();
+        Epic epic = epics.get(epicId);
+        if (epic == null) {
+            return;
+        }
+        int id = subtask.getId();
+        subtasks.put(id, subtask);
+        epic.addSubtask(id);
+        updateEpicStatus(epic);
+
+    }
 }

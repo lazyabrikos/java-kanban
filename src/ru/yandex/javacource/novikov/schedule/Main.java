@@ -2,6 +2,7 @@ package ru.yandex.javacource.novikov.schedule;
 
 import ru.yandex.javacource.novikov.schedule.tasks.*;
 import ru.yandex.javacource.novikov.schedule.manager.*;
+import java.io.File;
 
 public class Main {
 
@@ -10,6 +11,12 @@ public class Main {
         Epic epic2 = new Epic("Приготовить новогодний стол", "Придумать разные блюда");
         Task task1 = new Task("Сходить в магазин", "Купить продукты");
         Task task2 = new Task("Позвонить родственникам", "Поздравить с Новым годом");
+        Task task3 = new Task("Пить пиво", "Поздравить с Новым годом");
+        final File file = new File(
+                "." + File.separator +
+                        "resources" + File.separator + "data.csv"
+        );
+
         TaskManager taskManager = Manager.getDefault();
         int epicId = taskManager.addEpic(epic);
         int epic2Id = taskManager.addEpic(epic2);
@@ -44,5 +51,14 @@ public class Main {
         System.out.println(taskManager.getHistory());
         taskManager.removeEpic(epicId);
         System.out.println(taskManager.getHistory());
+
+        FileBackedTaskManager taskManager1 = FileBackedTaskManager.loadFromFile(file);
+        System.out.println("History taskManager2");
+        System.out.println(taskManager1.getHistory());
+        taskManager1.addTask(task1);
+        taskManager1.addTask(task3);
+        System.out.println(taskManager1.getAllTasks());
+        System.out.println(taskManager1.getAllEpics());
+
     }
 }
