@@ -2,14 +2,17 @@ package ru.yandex.javacource.novikov.schedule.manager;
 
 import ru.yandex.javacource.novikov.schedule.exceptions.ManagerSaveException;
 import ru.yandex.javacource.novikov.schedule.tasks.*;
+
 import java.io.*;
+import java.time.Duration;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.nio.charset.StandardCharsets;
 import java.io.FileReader;
 
 public class FileBackedTaskManager extends InMemoryTaskManager {
-    private static final String CSV_HEADER = "id,type,name,status,description,epic";
+    private static final String CSV_HEADER = "id,type,name,status,description,epic,duration,startTime";
     private static File HISTORY_FILE = new File(
             "." + File.separator +
                     "resources" + File.separator + "history.csv"
@@ -118,7 +121,7 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
     }
 
     private void save() {
-        try (BufferedWriter bufferedWriter =  new BufferedWriter(new FileWriter(file, StandardCharsets.UTF_8))) {
+        try (BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(file, StandardCharsets.UTF_8))) {
             bufferedWriter.write(CSV_HEADER);
             bufferedWriter.newLine();
 
@@ -138,7 +141,7 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
             }
             saveHistory();
         } catch (IOException e) {
-            throw new ManagerSaveException("Ошибка при записи сохраненных задача в файл");
+            throw new ManagerSaveException("Ошибка при записи сохраненных задач в файл");
         }
     }
 
@@ -191,7 +194,6 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
             throw new ManagerSaveException("Ошибка при чтении файла");
         }
 
-
         return taskManager;
     }
 
@@ -219,16 +221,28 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
         String name = taskData[2];
         Status status = Status.valueOf(taskData[3]);
         String description = taskData[4];
+        Duration duration = null;
+        if (taskData.length >= 7 && !taskData[6].isEmpty()) {
+            duration = Duration.ofMinutes(Long.parseLong(taskData[6]));
+        }
+        LocalDateTime startTime = null;
+        if (taskData.length == 8 && !taskData[7].isEmpty()) {
+            startTime = LocalDateTime.parse(taskData[7]);
+        }
         switch (type) {
             case TASK:
                 Task task = new Task(name, description);
                 task.setId(id);
                 task.setStatus(status);
+                task.setDuration(duration);
+                task.setStartTime(startTime);
                 return task;
             case EPIC:
                 Epic epic = new Epic(name, description);
                 epic.setId(id);
                 epic.setStatus(status);
+                epic.setDuration(duration);
+                epic.setStartTime(startTime);
                 return epic;
             case SUBTASK:
                 Subtask subtask = new Subtask(name, description);
@@ -236,6 +250,8 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
                 subtask.setStatus(status);
                 int epicId = Integer.parseInt(taskData[5]);
                 subtask.setEpicId(epicId);
+                subtask.setDuration(duration);
+                subtask.setStartTime(startTime);
                 return subtask;
             default:
                 return null;
@@ -243,13 +259,23 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
     }
 
     private String toString(Task task) {
+        String duration = "";
+        String startTime = "";
+        if (task.getStartTime() != null) {
+            startTime = task.getStartTime().toString();
+        }
+        if (task.getDuration() != null) {
+            duration = Long.toString(task.getDuration().toMinutes());
+        }
         String[] csvString = new String[]{
                 Integer.toString(task.getId()),
                 task.getType().toString(),
                 task.getName(),
                 task.getStatus().toString(),
                 task.getDescription(),
-                task.getType().equals(TaskType.SUBTASK) ? Integer.toString(((Subtask) task).getEpicId()) : ""
+                task.getType().equals(TaskType.SUBTASK) ? Integer.toString(((Subtask) task).getEpicId()) : "",
+                duration,
+                startTime
         };
         return String.join(",", csvString);
     }

@@ -15,8 +15,12 @@ public final class Manager {
         return new FileBackedTaskManager(new File(
                 "." + File.separator +
                         "resources" + File.separator + "data.csv"
-            )
+        )
         );
+    }
+
+    public static TaskManager getInMemoryTaskManager() {
+        return new InMemoryTaskManager();
     }
 
     public static HistoryManager getDefaultHistory() {
