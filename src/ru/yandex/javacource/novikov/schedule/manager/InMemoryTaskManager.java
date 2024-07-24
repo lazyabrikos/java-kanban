@@ -1,13 +1,15 @@
 package ru.yandex.javacource.novikov.schedule.manager;
 
+import ru.yandex.javacource.novikov.schedule.exceptions.ValidationException;
+import ru.yandex.javacource.novikov.schedule.manager.history.HistoryManager;
+import ru.yandex.javacource.novikov.schedule.tasks.Epic;
+import ru.yandex.javacource.novikov.schedule.tasks.Status;
+import ru.yandex.javacource.novikov.schedule.tasks.Subtask;
+import ru.yandex.javacource.novikov.schedule.tasks.Task;
+
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.*;
-import java.util.stream.Collectors;
-
-import ru.yandex.javacource.novikov.schedule.exceptions.ValidationException;
-import ru.yandex.javacource.novikov.schedule.manager.history.HistoryManager;
-import ru.yandex.javacource.novikov.schedule.tasks.*;
 
 public class InMemoryTaskManager implements TaskManager {
     private final HashMap<Integer, Task> tasks;

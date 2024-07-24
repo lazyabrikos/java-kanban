@@ -5,7 +5,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Map;
-//Делал по ТЗ, но не логичней будет вынести реализацию двусвязного списка в отдельный класс, как сделал для Node?
 
 public class InMemoryHistoryManager implements HistoryManager {
 
