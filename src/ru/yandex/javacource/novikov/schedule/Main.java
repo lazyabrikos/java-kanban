@@ -20,10 +20,11 @@ public class Main {
                 Duration.ofMinutes(100),
                 LocalDateTime.of(LocalDate.now(), LocalTime.of(10, 12))
         );
-        Task task2 = new Task("Позвонить родственникам",
+        Task task2 = new Task(
+                "Позвонить родственникам",
                 "Поздравить с Новым годом",
                 Duration.ofMinutes(200),
-                LocalDateTime.of(LocalDate.now(), LocalTime.of(14, 30))
+                LocalDateTime.of(LocalDate.now(), LocalTime.of(10, 30))
         );
         Task task3 = new Task("Пить пиво", "Поздравить с Новым годом");
         final File file = new File(

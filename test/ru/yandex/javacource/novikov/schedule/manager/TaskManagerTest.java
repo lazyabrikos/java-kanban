@@ -165,7 +165,9 @@ abstract class TaskManagerTest<T extends TaskManager> {
         manager.updateSubtask(subtask);
         Subtask subtask2 = new Subtask("Teeeest",
                 "Description",
-                epicId
+                epicId,
+                Duration.ofMinutes(100),
+                LocalDateTime.of(LocalDate.now(), LocalTime.of(15, 40))
         );
         final int subtask2Id = manager.addSubtask(subtask2);
         Epic savedEpic = manager.getEpic(epicId);
@@ -233,10 +235,7 @@ abstract class TaskManagerTest<T extends TaskManager> {
                 Duration.ofMinutes(100),
                 LocalDateTime.of(LocalDate.now(), LocalTime.of(13, 0))
         );
-        Assertions.assertThrows(ValidationException.class,
-                () -> manager.addTask(task2),
-                "Пересечение по времени"
-        );
+        Assertions.assertEquals(-1, manager.addTask(task2), "Валидация не работает");
     }
 
 

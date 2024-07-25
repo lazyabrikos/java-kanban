@@ -18,11 +18,6 @@ public class Subtask extends Task {
         this.type = TaskType.SUBTASK;
     }
 
-    public Subtask(String taskName, String description, Duration duration) {
-        super(taskName, description, duration);
-        this.type = TaskType.SUBTASK;
-    }
-
     public Subtask(String taskName, String description, Duration duration, LocalDateTime startTime) {
         super(taskName, description, duration, startTime);
         this.type = TaskType.SUBTASK;

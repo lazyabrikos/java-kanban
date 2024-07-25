@@ -29,14 +29,6 @@ public class Task {
         this.startTime = startTime;
     }
 
-    public Task(String name, String description, Duration duration) {
-        this.name = name;
-        this.description = description;
-        this.status = Status.NEW;
-        this.type = TaskType.TASK;
-        this.duration = duration;
-    }
-
     public LocalDateTime getStartTime() {
         return startTime;
     }
@@ -46,11 +38,7 @@ public class Task {
     }
 
     public LocalDateTime getEndTime() {
-        try {
-            return this.startTime.plusMinutes(duration.toMinutes());
-        } catch (NullPointerException e) {
-            return null;
-        }
+        return this.startTime.plusMinutes(duration.toMinutes());
     }
 
     public Duration getDuration() {
