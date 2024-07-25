@@ -8,9 +8,7 @@ import ru.yandex.javacource.novikov.schedule.tasks.Subtask;
 import ru.yandex.javacource.novikov.schedule.tasks.Task;
 
 import java.time.Duration;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.util.*;
 
 public class InMemoryTaskManager implements TaskManager {
