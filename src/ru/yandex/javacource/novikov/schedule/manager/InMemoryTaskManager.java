@@ -320,18 +320,20 @@ public class InMemoryTaskManager implements TaskManager {
         final LocalDateTime endTime = task.getEndTime();
 
         for (Task t : prioritizedTask) {
-            final LocalDateTime existStart = t.getStartTime();
-            final LocalDateTime existEnd = t.getEndTime();
-            if (existStart == null || !endTime.isAfter(existStart)) {
-                continue;
-            }
+            if (t.getStartTime() != null && t.getDuration() != null) {
+                final LocalDateTime existStart = t.getStartTime();
+                final LocalDateTime existEnd = t.getEndTime();
+                if (!endTime.isAfter(existStart)) {
+                    continue;
+                }
 
-            if (existEnd == null || !existEnd.isAfter(startTime)) {
-                continue;
-            }
+                if (!existEnd.isAfter(startTime)) {
+                    continue;
+                }
 
-            throw new ValidationException("Задача пересекактся с id=" + t.getId() +
-                    " c " + existStart + " по " + existEnd);
+                throw new ValidationException("Задача пересекактся с id=" + t.getId() +
+                        " c " + existStart + " по " + existEnd);
+            }
         }
     }
 

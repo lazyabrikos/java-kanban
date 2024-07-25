@@ -179,7 +179,9 @@ abstract class TaskManagerTest<T extends TaskManager> {
         subtask.setStatus(Status.DONE);
         Subtask subtask2 = new Subtask("Teeeest",
                 "Description",
-                epicId
+                epicId,
+                Duration.ofMinutes(100),
+                LocalDateTime.of(LocalDate.now(), LocalTime.of(20, 40))
         );
         final int subtask2Id = manager.addSubtask(subtask2);
         Epic savedEpic = manager.getEpic(epicId);
@@ -211,7 +213,13 @@ abstract class TaskManagerTest<T extends TaskManager> {
     @Test
     public void subtaskInHistoryShouldBeUpdated() {
         Subtask firstSubtask = manager.getSubtask(subtaskId);
-        Subtask subtask1 = new Subtask("NewSubtask", "Description", epicId);
+        Subtask subtask1 = new Subtask(
+                "NewSubtask",
+                "Description",
+                epicId,
+                Duration.ofMinutes(100),
+                LocalDateTime.of(LocalDate.now(), LocalTime.of(19, 40))
+        );
         subtask1.setId(subtaskId);
         manager.updateSubtask(subtask1);
         Subtask savedSubtask = manager.getSubtask(subtaskId);
