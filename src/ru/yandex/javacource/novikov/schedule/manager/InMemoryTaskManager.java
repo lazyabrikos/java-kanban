@@ -31,17 +31,12 @@ public class InMemoryTaskManager implements TaskManager {
     //Добавляем новую задачу в Менеджер
     @Override
     public int addTask(Task task) {
-        try {
-            validation(task);
-            int id = ++generatorId;
-            task.setId(id);
-            tasks.put(task.getId(), task);
-            prioritizedTask.add(task);
-            return id;
-        } catch (ValidationException e) {
-            System.out.println(e.getMessage());
-            return -1;
-        }
+        validation(task);
+        int id = ++generatorId;
+        task.setId(id);
+        tasks.put(task.getId(), task);
+        prioritizedTask.add(task);
+        return id;
 
     }
 
@@ -58,24 +53,19 @@ public class InMemoryTaskManager implements TaskManager {
     //Добавляем новую подзадачу в менеджер и в епик соотвественно
     @Override
     public Integer addSubtask(Subtask subtask) {
-        try {
-            validation(subtask);
-            int epicId = subtask.getEpicId();
-            Epic epic = epics.get(epicId);
-            if (epic == null) {
-                return null;
-            }
-            int id = ++generatorId;
-            subtask.setId(id);
-            subtasks.put(id, subtask);
-            epic.addSubtask(id);
-            updateEpicData(epicId);
-            prioritizedTask.add(subtask);
-            return id;
-        } catch (ValidationException e) {
-            System.out.println(e.getMessage());
-            return -1;
+        validation(subtask);
+        int epicId = subtask.getEpicId();
+        Epic epic = epics.get(epicId);
+        if (epic == null) {
+            return null;
         }
+        int id = ++generatorId;
+        subtask.setId(id);
+        subtasks.put(id, subtask);
+        epic.addSubtask(id);
+        updateEpicData(epicId);
+        prioritizedTask.add(subtask);
+        return id;
     }
 
     //Обновляем задачу

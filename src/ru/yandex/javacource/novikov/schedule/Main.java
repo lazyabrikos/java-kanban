@@ -24,7 +24,7 @@ public class Main {
                 "Позвонить родственникам",
                 "Поздравить с Новым годом",
                 Duration.ofMinutes(200),
-                LocalDateTime.of(LocalDate.now(), LocalTime.of(10, 30))
+                LocalDateTime.of(LocalDate.now(), LocalTime.of(15, 30))
         );
         Task task3 = new Task("Пить пиво", "Поздравить с Новым годом");
         final File file = new File(

@@ -243,7 +243,10 @@ abstract class TaskManagerTest<T extends TaskManager> {
                 Duration.ofMinutes(100),
                 LocalDateTime.of(LocalDate.now(), LocalTime.of(13, 0))
         );
-        Assertions.assertEquals(-1, manager.addTask(task2), "Валидация не работает");
+        Assertions.assertThrows(ValidationException.class,
+                () -> manager.addTask(task2),
+                "Валидация не работает"
+        );
     }
 
 
