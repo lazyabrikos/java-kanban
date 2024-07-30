@@ -1,16 +1,26 @@
 package ru.yandex.javacource.novikov.schedule.tasks;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Epic extends Task {
 
     private List<Integer> subtasks;
+    private LocalDateTime endTime;
 
     public Epic(String taskName, String description) {
         super(taskName, description);
         subtasks = new ArrayList<>();
         this.type = TaskType.EPIC;
+    }
+
+    public void setEndTime(LocalDateTime endTime) {
+        this.endTime = endTime;
+    }
+
+    public LocalDateTime getEndTime(LocalDateTime endTime) {
+        return endTime;
     }
 
     public void addSubtask(Integer subtaskId) {
@@ -38,6 +48,9 @@ public class Epic extends Task {
                 ", taskId=" + this.getId() +
                 ", status=" + this.getStatus() +
                 ", type=" + this.getType().toString() +
+                ", duration=" + this.getDuration() +
+                ", startTime=" + this.getStartTime() +
+                ", endTime=" + this.endTime +
                 '}';
     }
 }
