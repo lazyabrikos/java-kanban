@@ -14,7 +14,7 @@ public class Main {
     public static void main(String[] args) {
         Epic epic = new Epic("Купить подарки", "подарки для нового года");
         Epic epic2 = new Epic("Приготовить новогодний стол", "Придумать разные блюда");
-        Task task1 = new Task(
+        /*Task task1 = new Task(
                 "Сходить в магазин",
                 "Купить продукты",
                 Duration.ofMinutes(100),
@@ -37,8 +37,8 @@ public class Main {
         int epic2Id = taskManager.addEpic(epic2);
         int task1Id = taskManager.addTask(task1);
         int task2Id = taskManager.addTask(task2);
+
         System.out.println(taskManager.getPrioritizedTasks());
-        /*
         Subtask subtask = new Subtask("Купить коробку",
                 "купить коробку для подарков",
                 epicId,

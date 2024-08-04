@@ -6,12 +6,11 @@ import java.util.List;
 
 public class Epic extends Task {
 
-    private List<Integer> subtasks;
+    private List<Integer> subtasks = new ArrayList<>();
     private LocalDateTime endTime;
 
     public Epic(String taskName, String description) {
         super(taskName, description);
-        subtasks = new ArrayList<>();
         this.type = TaskType.EPIC;
     }
 
