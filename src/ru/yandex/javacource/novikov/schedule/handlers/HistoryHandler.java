@@ -7,7 +7,7 @@ import ru.yandex.javacource.novikov.schedule.tasks.Task;
 import java.io.IOException;
 import java.util.List;
 
-public class HistoryHandler extends BaseHandler{
+public class HistoryHandler extends BaseHandler {
 
 
     public HistoryHandler(TaskManager taskManager) {
