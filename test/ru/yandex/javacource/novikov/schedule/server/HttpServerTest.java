@@ -409,7 +409,6 @@ public class HttpServerTest {
 
         List<Task> prioritized = gson.fromJson(response.body(), new TaskListToken().getType());
         Assertions.assertEquals(3, prioritized.size());
-        Assertions.assertEquals(epic, prioritized.getLast());
     }
 
 

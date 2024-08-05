@@ -2,6 +2,7 @@ package ru.yandex.javacource.novikov.schedule.manager;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import ru.yandex.javacource.novikov.schedule.exceptions.NoFoundException;
 import ru.yandex.javacource.novikov.schedule.exceptions.ValidationException;
 import ru.yandex.javacource.novikov.schedule.tasks.Epic;
 import ru.yandex.javacource.novikov.schedule.tasks.Status;
@@ -103,19 +104,19 @@ abstract class TaskManagerTest<T extends TaskManager> {
     @Test
     public void removeTaskByIdTest() {
         manager.removeTask(taskId);
-        Assertions.assertNull(manager.getTask(taskId), "Task not removed");
+        Assertions.assertThrows(NoFoundException.class, () -> manager.getTask(taskId), "Task not removed");
     }
 
     @Test
     public void removeEpicByIdTest() {
         manager.removeEpic(epicId);
-        Assertions.assertNull(manager.getEpic(epicId), "Epic not removed");
+        Assertions.assertThrows(NoFoundException.class, () -> manager.getEpic(epicId), "Epic not removed");
     }
 
     @Test
     public void removeSubtaskByIdTest() {
         manager.removeSubtask(subtaskId);
-        Assertions.assertNull(manager.getSubtask(subtaskId), "Subtask not removed");
+        Assertions.assertThrows(NoFoundException.class, () -> manager.getSubtask(subtaskId), "Subtask not removed");
     }
 
     @Test
