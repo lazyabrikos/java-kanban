@@ -31,7 +31,6 @@ public class EpicHandler extends BaseHandler {
             case "GET": {
                 if (path.equals("/epics")) {
                     List<Epic> epics = taskManager.getAllEpics();
-                    System.out.println(epics);
                     try {
                         String jsonString = gson.toJson(epics);
                         sendText(httpExchange, jsonString, 200);
@@ -69,7 +68,6 @@ public class EpicHandler extends BaseHandler {
                     try {
                         Epic epic = gson.fromJson(jsonElement, Epic.class);
                         int epicId = epic.getId();
-                        System.out.println(epic );
                         if (epicId == 0) {
                             try {
                                 epicId  = taskManager.addEpic(epic);

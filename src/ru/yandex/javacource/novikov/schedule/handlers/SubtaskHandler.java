@@ -52,7 +52,6 @@ public class SubtaskHandler extends BaseHandler {
                     try {
 
                         Subtask subtask = gson.fromJson(jsonElement, Subtask.class);
-                        System.out.println(subtask.toString());
                         int subtaskId = subtask.getId();
                         if (subtaskId == 0) {
                             try {

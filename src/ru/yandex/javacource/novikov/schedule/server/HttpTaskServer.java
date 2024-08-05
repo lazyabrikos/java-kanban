@@ -11,9 +11,8 @@ import java.net.InetSocketAddress;
 public class HttpTaskServer {
     private static final int PORT = 8080;
     private final HttpServer httpServer;
-    private final TaskManager taskManager = Manager.getInMemoryTaskManager();
 
-    public HttpTaskServer() throws IOException {
+    public HttpTaskServer(TaskManager taskManager) throws IOException {
         httpServer = HttpServer.create(new InetSocketAddress(PORT), 0);
 
         httpServer.createContext("/tasks", new TaskHandler(taskManager));
@@ -24,7 +23,7 @@ public class HttpTaskServer {
 
     }
     public static void main(String[] args) throws IOException{
-        new HttpTaskServer().start();
+        new HttpTaskServer(Manager.getInMemoryTaskManager()).start();
     }
 
     public void start() {

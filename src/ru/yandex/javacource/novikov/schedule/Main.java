@@ -14,7 +14,7 @@ public class Main {
     public static void main(String[] args) {
         Epic epic = new Epic("Купить подарки", "подарки для нового года");
         Epic epic2 = new Epic("Приготовить новогодний стол", "Придумать разные блюда");
-        /*Task task1 = new Task(
+        Task task1 = new Task(
                 "Сходить в магазин",
                 "Купить продукты",
                 Duration.ofMinutes(100),
@@ -50,7 +50,7 @@ public class Main {
                 "купить ленту для подарков",
                 epicId,
                 Duration.ofMinutes(20),
-                LocalDateTime.of(LocalDate.now(), LocalTime.of(13, 40))
+                LocalDateTime.of(LocalDate.now(), LocalTime.of(20, 40))
         );
         Subtask subtask3 = new Subtask("Купить упаковку",
                 "купить упаковку для подарков",
@@ -69,13 +69,12 @@ public class Main {
         tmp = taskManager.getEpic(epicId);
         tmp = taskManager.getEpic(epic2Id);
         tmp = taskManager.getSubtask(subtaskId);
-        taskManager.removeEpic(epicId);
 
         FileBackedTaskManager taskManager1 = FileBackedTaskManager.loadFromFile(file);
         System.out.println("History taskManager2");
         taskManager1.addTask(task1);
         taskManager1.addTask(task3);
-        System.out.println(taskManager1.getPrioritizedTasks());
-        */
+        System.out.println(taskManager.getPrioritizedTasks());
+
     }
 }

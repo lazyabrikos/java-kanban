@@ -2,12 +2,12 @@ package ru.yandex.javacource.novikov.schedule.handlers;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.sun.net.httpserver.Headers;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import ru.yandex.javacource.novikov.schedule.adapters.DurationAdapter;
-import ru.yandex.javacource.novikov.schedule.manager.TaskManager;
 import ru.yandex.javacource.novikov.schedule.adapters.LocalDateTimeAdapter;
+import ru.yandex.javacource.novikov.schedule.manager.TaskManager;
+
 import java.io.IOException;
 import java.io.OutputStream;
 import java.nio.charset.StandardCharsets;
