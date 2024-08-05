@@ -20,6 +20,7 @@ public class BaseHandler implements HttpHandler {
             .serializeNulls()
             .registerTypeAdapter(Duration.class, new DurationAdapter())
             .registerTypeAdapter(LocalDateTime.class, new LocalDateTimeAdapter()).create();
+
     protected BaseHandler(TaskManager taskManager) {
         this.taskManager = taskManager;
     }

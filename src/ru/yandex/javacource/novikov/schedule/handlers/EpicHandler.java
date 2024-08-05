@@ -70,7 +70,7 @@ public class EpicHandler extends BaseHandler {
                         int epicId = epic.getId();
                         if (epicId == 0) {
                             try {
-                                epicId  = taskManager.addEpic(epic);
+                                epicId = taskManager.addEpic(epic);
                                 sendText(httpExchange, "Epic added with id=" + epicId, 201);
                             } catch (ValidationException e) {
                                 sendIntersections(httpExchange,
