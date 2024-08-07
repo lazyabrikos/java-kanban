@@ -1,6 +1,7 @@
 package ru.yandex.javacource.novikov.schedule.manager.history;
 
 import ru.yandex.javacource.novikov.schedule.tasks.*;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.ArrayList;
@@ -18,10 +19,6 @@ public class InMemoryHistoryManager implements HistoryManager {
 
     @Override
     public void addTask(Task task) {
-        if (task == null) {
-            return;
-        }
-
         final int id = task.getId();
         remove(id);
         linkLast(task);

@@ -1,5 +1,6 @@
 package ru.yandex.javacource.novikov.schedule.manager;
 
+import ru.yandex.javacource.novikov.schedule.exceptions.NoFoundException;
 import ru.yandex.javacource.novikov.schedule.exceptions.ValidationException;
 import ru.yandex.javacource.novikov.schedule.manager.history.HistoryManager;
 import ru.yandex.javacource.novikov.schedule.tasks.Epic;
@@ -57,7 +58,7 @@ public class InMemoryTaskManager implements TaskManager {
         int epicId = subtask.getEpicId();
         Epic epic = epics.get(epicId);
         if (epic == null) {
-            return null;
+            throw new NoFoundException("There is no epic for this subtask");
         }
         int id = ++generatorId;
         subtask.setId(id);
@@ -75,7 +76,7 @@ public class InMemoryTaskManager implements TaskManager {
         Task savedTask = tasks.get(id);
         prioritizedTask.remove(savedTask);
         if (savedTask == null) {
-            return;
+            throw new NoFoundException("No task with id=" + id);
         }
         tasks.put(id, task);
         prioritizedTask.add(task);
@@ -88,7 +89,7 @@ public class InMemoryTaskManager implements TaskManager {
         int epicId = subtask.getEpicId();
         Epic savedEpic = epics.get(epicId);
         if (savedEpic == null || savedSubtask == null) {
-            return;
+            throw new NoFoundException(String.format("No epic with id=%d or no subtask with id=%d", epicId, id));
         }
         subtasks.put(id, subtask);
         updateEpicData(epicId);
@@ -101,7 +102,7 @@ public class InMemoryTaskManager implements TaskManager {
         int id = epic.getId();
         Epic savedEpic = epics.get(id);
         if (savedEpic == null) {
-            return;
+            throw new NoFoundException("No epic with id=" + id);
         }
         epic.setSubtasksIds(savedEpic.getSubtasks());
         epic.setStatus(savedEpic.getStatus());
@@ -184,12 +185,14 @@ public class InMemoryTaskManager implements TaskManager {
     //Получение списка всех подзадач эпика
     @Override
     public List<Subtask> getAllEpicSubtasks(int epicId) {
-        List<Subtask> returnSubtasks = new ArrayList<>();
         Epic epic = epics.get(epicId);
         if (epic == null) {
-            return null;
+            throw new NoFoundException("There is no epic with id=" + epicId);
         }
-        return returnSubtasks;
+        List<Integer> subtasksId = epic.getSubtasks();
+        return subtasks.values().stream()
+                .filter(subtask -> subtasksId.contains(subtask.getId()))
+                .toList();
     }
 
     @Override
@@ -210,22 +213,34 @@ public class InMemoryTaskManager implements TaskManager {
     @Override
     public Subtask getSubtask(int id) {
         Subtask subtask = subtasks.get(id);
-        inMemoryHistoryManager.addTask(subtask);
-        return subtask;
+        if (subtask == null) {
+            throw new NoFoundException("No subtask with id=" + id);
+        } else {
+            inMemoryHistoryManager.addTask(subtask);
+            return subtask;
+        }
     }
 
     @Override
     public Epic getEpic(int id) {
         Epic epic = epics.get(id);
-        inMemoryHistoryManager.addTask(epic);
-        return epic;
+        if (epic == null) {
+            throw new NoFoundException("No epic with id=" + id);
+        } else {
+            inMemoryHistoryManager.addTask(epic);
+            return epic;
+        }
     }
 
     @Override
     public Task getTask(int id) {
         Task task = tasks.get(id);
-        inMemoryHistoryManager.addTask(task);
-        return task;
+        if (task == null) {
+            throw new NoFoundException("No task with id=" + id);
+        } else {
+            inMemoryHistoryManager.addTask(task);
+            return task;
+        }
     }
 
     @Override
